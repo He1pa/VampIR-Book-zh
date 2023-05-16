@@ -1,12 +1,12 @@
-# Proof Validity and Interaction
+# 证明有效性与交互
 
-Values for variables do not need to be given upfront. If our file was instead 
+变量的值不需要提前给出。如果我们的文件改为
 
 ```haskell
 x = 10;
 ```
 
-without declaring the value of `x`, Vamp-IR would interpret this unbound variable as an input needing to be specified during proof generation. If this is saved in the file `ex2.pir` and compiled to a circuit, one can see that Vamp-IR will ask for an input when it's needed.
+在不声明 `x` 的值的情况下，Vamp-IR 会将此未绑定变量解释为需要在证明生成期间指定的输入。 如果将其保存在文件 `ex2.pir` 中并编译成电路，可以看到 Vamp-IR 会在需要时请求输入。
 
 ```bash
 $ printf "x = 10;">examples/ex2.pir
@@ -33,7 +33,7 @@ $ 9
 > * Proof generation success!
 ```
 
-It asked for the private value for `x`, to which I input `9`. This should create an invalid proof this time as 9 does not equal 10. If one tries verifying the proof, they will observe that it's invalid.
+它要求 `x` 的私有值，对此我输入 `9`。 这次应该创建一个无效证明，因为 9 不等于 10。如果有人尝试验证证明，他们会发现它是无效的。
 
 ```bash
 $ target/debug/vamp-ir plonk verify -u examples/params.pp \
@@ -46,5 +46,4 @@ $ target/debug/vamp-ir plonk verify -u examples/params.pp \
 > * Result from verifier: Err(ProofVerificationError)
 ```
 
-As you can see, a verification error is given.
-
+正如所看到的，给出了一个验证错误。
