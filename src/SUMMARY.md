@@ -1,7 +1,7 @@
 
-# What is Vamp-IR and How is it Used?
+# Vamp-IR 是什么？ 如何使用它?
 
-- [Why Vamp-IR?](./section_1_1.md)
+- [为什么使用 Vamp-IR?](./section_1_1.md)
 - [Using Vamp-IR](./section_1_2.md)
 - [Proof Validity and Interaction](./section_1_3.md)
 - [Choosing a Back-end](./section_1_4.md)
