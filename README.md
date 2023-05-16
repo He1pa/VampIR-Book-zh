@@ -1,4 +1,5 @@
 # VampIR-Book
-A book which can act as an introduction and documentation for VampIR
+一本可以作为 VampIR 说明和文档的电子书
 
-Currently hosted [here](https://anoma.github.io/VampIR-Book/).
+[English](https://anoma.github.io/VampIR-Book/)
+[中文](https://www.he1pa.com/VampIR-Book-zh/)
