@@ -1,6 +1,6 @@
-# Choosing a Back-end
+# 选择一个后端
 
-A back-end is automatically chosen based on the first argument issued to the executable. If we want to generate a Halo2 circuit, we can simply issue `halo2` instead of `plonk`. Repeating the examples from [the introduction](section_1_2.md), we could have done the following to get a Halo2 circuit.
+后端是根据执行时的第一个参数自动选择的。如果我们想要生成 Halo2 电路，我们可以使用 `halo2` 代替 `plonk`。 重复之前的[例子](section_1_2.md), 我们可以完成以下操作来生成 Halo2 电路。
 
 ```bash
 $ target/debug/vamp-ir halo2 compile -s examples/ex1.pir \
@@ -25,14 +25,13 @@ $ target/debug/vamp-ir halo2 verify -c examples/circuit.halo2 \
 > * Zero-knowledge proof is valid
 ```
 
-Notice that there is no `-u` argument for universal parameters when compiling Halo2 circuits.
+请注意，在编译 Halo2 电路时，通用参数没有“-u”参数。
 
-Also note that Vamp-IR does not care about the extensions to the generated files; they can be named anything of the user's choosing.
+另请注意，Vamp-IR 不关心生成文件的扩展名； 它们可以命名为用户选择的任何名称。
 
-Currently, Vamp-IR supports the following proof systems;
+目前，Vamp-IR 支持以下证明系统；
+1. PLONK（`plonk`）
+2. Halo2（`halo2`）
 
-1. PLONK via `plonk`
-2. Halo2 via `halo2`
-
-<p style="color:red;">TODO: Contolling proofs, e.g. with the -m command.</p>
+<p style="color:red;">TODO：控制证明的后端，例如 使用 -m 命令。</p>
 
