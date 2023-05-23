@@ -6,9 +6,9 @@
 - [证明有效性与交互](./section_1_3.md)
 - [选择一个后端](./section_1_4.md)
 
-# Programming in Vamp-IR
+# Vamp-IR 编程
 
-- [Basic Arithmetic](./section_2_1.md)
+- [基本算术运算](./section_2_1.md)
 - [Functions](./section_2_2.md)
 - [Tuples](./section_2_3.md)
 - [The Iter Function](./section_2_4.md)
