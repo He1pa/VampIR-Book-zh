@@ -1,6 +1,6 @@
-# Tuples
+# 元祖
 
-One of the few first-order data structures provided in Vamp-IR is the tuple. One can use them in place of numbers to check multiple things in parallel.
+Vamp-IR 中提供的少数一阶数据结构之一是元组。 人们可以用它们代替数字来并行检查多个事物。
 
 ```haskell
 def xs = (1, 2);
@@ -8,13 +8,13 @@ def xs = (1, 2);
 xs = (1, 2);
 ```
 
-During type checking, `xs`'s type is given as
+在类型检查时， `xs` 的类型为：
 
 ```bash
 > xs: (int, int)
 ```
 
-This indicates that `xs` is a pair of integers. One can also iterate tuples as much as they want.
+这表明 `xs` 是一对整数。 人们还可以根据需要尽可能多地迭代元组。
 
 ```haskell
 def xs = (1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -22,25 +22,25 @@ def xs = (1, 2, 3, 4, 5, 6, 7, 8, 9);
 xs = (1, 2, 3, 4, 5, 6, 7, 8, 9);
 ```
 
-During type checking, one can observe the type
+在类型检查期间，可以观察到类型：
 
 ```bash
 > xs[2]: (int, (int, (int, (int, (int, (int, (int, (int, int))))))))
 ```
 
-This indicates that tuples with more than two entries are, internally, just nested pairs associated to the right.
+这表明具有两个以上元素的元组在内部只是与右侧关联的嵌套对。
 
 ```haskell
 (1, 2, 3) = (1, (2, 3));
 ```
 
-`(1, 2, 3) = ((1, 2), 3);` will produce a type error.
+`(1, 2, 3) = ((1, 2), 3);` 将会产生类型错误。
 
-One cannot compare tuples to numbers, so `1 = (1, 1);` will produce an error.
+不能将元祖和数字进行比较, 所以 `1 = (1, 1);` 将会产生错误。
 
-One also cannot treat tuples as numbers, so, for example, `(1, 2) + (3, 4);` will produce an error.
+不能将元祖作为数字, 所以, 例如, `(1, 2) + (3, 4);` 将会产生错误。
 
-Vamp-IR provides the ability to define functions over tuples using pattern matching.
+Vamp-IR 提供了使用模式匹配在元组上定义函数的能力。
 
 ```haskell
 def add (a, b) (x, y) = (a + x, b + y);
@@ -48,7 +48,7 @@ def add (a, b) (x, y) = (a + x, b + y);
 add (1, 2) (3, 4) = (4, 6);
 ```
 
-Many standard tuple construction and manipulation functions can be defined.
+可以定义许多标准的元组构造和操作函数。
 
 ```haskell
 def fst (x, y) = x;
@@ -59,9 +59,9 @@ def swap (x, y) = (y, x);
 def assoc (x, (y, z)) = ((x, y), z);
 ```
 
-As you can see by `assoc`, one can pattern match a tuple within another tuple. Additionally, the fact that n-tuples are nested pairs means that `fst` acts uniformly on tuples; using that definition we'd have `fst (1, 2, 3) = 1`.
+正如 `assoc`，可以在另一个元组中对一个元组进行模式匹配。 此外，n 元组是嵌套对这一事实意味着 fst 统一作用于元组； 使用该定义，我们将得到 `fst (1, 2, 3) = 1`。
 
-The types here tell us something interesting. One sees, for example, that;
+这里的类型告诉我们一些有趣的事情。 例如，人们看到了这一点；
 
 ```bash
 > fst[4]: (([24], [25]) -> [24])
@@ -69,17 +69,16 @@ The types here tell us something interesting. One sees, for example, that;
 > swap[16]: (([50], [51]) -> ([51], [50]))
 ```
 
-The numbers in square braces denote variable types. These functions do not have a fixed type, but their types can be instantiated to be different types, depending on the context. Different calls within the same program can also have different types. For example, one can have both of these equations in the same file:
+方括号中的数字表示变量类型。 这些函数没有固定的类型，但它们的类型可以根据上下文实例化为不同的类型。 同一个程序中的不同调用也可以有不同的类型。 例如，可以将这两个方程式放在同一个文件中：
 
 ```haskell
 fst (1, 2) = 1;
 fst ((1, 2), 3) = (1, 2);
 ```
 
-Even though the same function is called on both lines, different types are returned each time. On the first line, it returns an integer while on the second it returns a pair.
+即使在两行上都调用了相同的函数，每次都返回不同的类型。 在第一行，它返回一个整数，而在第二行，它返回一个对。
 
-
-Vamp-IR also provides a 0-tuple denoted `()`, analogous to the return value of a unit type in many functional languages or a void type in many imperative languages. It's the closest thing to getting a function to return nothing.
+Vamp-IR 还提供了一个表示为 `()` 的 0 元组，类似于许多函数式语言中单元类型（unit type）的返回值或许多命令式语言中的 void 类型。 这是让函数不返回任何内容的最接近的事情。
 
 ```haskell
 def tt = ();
@@ -91,16 +90,16 @@ def f x = {
 f 2 = tt;
 ```
 
-During type inference, the following is shown;
+在类型推断期间，显示以下内容；
 
 ```bash
  > tt[2]: ()
  > f[4]: (int -> ())
 ```
 
-indicating that `tt` is an element of the unit type and that `f` will return an element of the unit type on an integer input. This shows that functions that have only equations do the same thing as functions that explicitly return a `()`, as mentioned in section on [functions](section_2_2.md).
+表明 `tt` 是单元类型的元素，而 `f` 将在整数输入上返回单元类型的元素。 这表明只有方程式的函数与显式返回 `()` 的函数执行相同的操作，如 [函数](section_2_2.md) 部分所述。
 
-Using units, one can design some of our functions to act like list manipulation programs. That is if one thinks of `(x, y)` as `Cons x y` and `()` as `Nil`, they can encode a list like `[1, 2, 3, 4]` as `(1, 2, 3, 4, ())`. The utility of this lies in the fact that each entry will appear in the head of a pair. This allows us to define more flexible programs. Modifying a few of our previous examples, one can have
+使用单元类型，可以设计我们的一些功能，使其像列表操作程序一样工作。 也就是说，如果有人将 `(x, y)` 视为 `Cons x y` 并将 `()` 视为 `Nil`，他们可以将类似 `[1, 2, 3, 4]` 的列表编码为 `(1, 2, 3, 4, ())`。 这样做的用处在于每个条目都将出现在一对的头部。 这使我们能够定义更灵活的程序。 修改我们之前的几个例子：
 
 ```haskell
 def swap (x, y, r) = (y, x, r);
@@ -126,15 +125,13 @@ def zip (a, b, q) (x, y, r) = ((a, x), (b, y), ());
 zip (1, 2, 3, 4, 5, ()) (6, 7, 8, ()) = ((1, 6), (2, 7), ());
 ```
 
-Vamp-IR ultimately generates a fixed, finitely iterated data type, meaning we cannot treat iterated tuples as a proper list type. As such, many list manipulation programs that one might take for granted can't be defined in full generality using tuples. However, this technique can recover some of that functionality in practice. Proper lists are available, see the section on [lists](section_2_5.md).
-
-Witness solicitation interacts in a somewhat interesting way with pairs. If one compiles the program
+Witness 请求以某种有趣的方式与成对互动。 如果编译程序
 
 ```haskell
 x = (1, 2);
 ```
 
-it seems like they will need to input a pair. However, during proof creation, Vamp-IR will ask;
+似乎他们需要输入一对。 然而，在证明创建过程中，Vamp-IR 会询问：
 
 ```bash
 > * Soliciting circuit witnesses...
@@ -146,4 +143,6 @@ It splits the variable into two sub-variables, named `x.0` (the first element of
 
 Without a variable-free first-order datatype for each uninstantiated variable, circuit generation is not possible. If one tries compiling `x = y;` without definitions for x or y, they will get an error indicating such.
 
+它将变量拆分为两个子变量，分别命名为 `x.0`（`x`的第一个元素）和`x.1`（`x`的第二个元素）。 所以编译后的电路实际上并没有一对形状的占位； 相反，它有两个占位对应于对中的元素。
 
+如果每个未实例化的变量都没有无变量的一阶数据类型，则无法生成电路。 如果一个人试图在没有 x 或 y 定义的情况下编译 `x = y;`，他们将得到一个错误指示。
