@@ -9,7 +9,7 @@
 # Vamp-IR 编程
 
 - [基本算术运算](./section_2_1.md)
-- [Functions](./section_2_2.md)
+- [函数](./section_2_2.md)
 - [Tuples](./section_2_3.md)
 - [The Iter Function](./section_2_4.md)
 - [Lists](./section_2_5.md)

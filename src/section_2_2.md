@@ -1,6 +1,6 @@
-# Functions
+# 函数
 
-The `def` construct allows one to define, not just constants, but functions as well.
+`def` 构造不仅允许定义常量，还允许定义函数。
 
 ```haskell
 def square x = x ^ 2;
@@ -8,15 +8,15 @@ def square x = x ^ 2;
 square 4 = 16;
 ```
 
-The name of the function is denoted by the first token after `def`. Function application is denoted by juxtaposition, a la some functional languages such as Haskell.
+函数的名称由 `def` 之后的第一个标记表示。函数应用并置(juxtaposition)表示，类似于某些函数式语言（如Haskell）。
 
-During compilation, the type checker will identify `square`'s type as a function from integers to integers.
+在编译期间，类型检查器将标识 `square` 的类型为从 int 到 int 的函数。
 
 ```bash
 > square[3]: (int -> int)
 ```
 
-Functions can have as many arguments as you want.
+函数可以有多个参数。
 
 ```haskell
 def f x y z = x * z + y;
@@ -24,19 +24,20 @@ def f x y z = x * z + y;
 f 4 5 6 = 29;
 ```
 
-The type of this function indicates multiple arguments.
+此函数的类型指示多个参数。
 
 ```bash
 > f[5]: (int -> (int -> (int -> int)))
 ```
 
-This tells us that each argument will take in an integer and produce a function, until the third argument, after which it will produce an integer. This indicates that application is left-associative and functions are curried by default (more on this in the section on [higher-order functions](section_2_6.md)).
+这告诉我们每个参数都会接受一个整数并产生一个函数，直到第三个参数，之后它会产生一个整数。 这表明应用程序是左关联的，并且默认情况下函数是柯里化的（更多信息请参见[高阶函数]（section_2_6.md）部分）。
+
 
 ```haskell
 ((f 4) 5) 6 = f 4 5 6;
 ```
 
-Definitions can contain definitions inside of them.
+定义中可以包含定义。
 
 ```haskell
 def g x = {
@@ -47,9 +48,9 @@ def g x = {
 g 3 = 60;
 ```
 
-Notice the usage of curly braces to define blocks that scope the function. Also, notice that the semicolon for the definition comes after the closing curly brace, and there is no semicolon for the last line before that brace. 
+请注意使用花括号来定义函数范围内的块。 另外，请注意定义的分号出现在右大括号之后，并且大括号之前的最后一行没有分号。
 
-Internal `def` statements should be used similarly to `let` statements common in many functional languages. Internal `def` statements can be functions as well.
+内部 `def` 语句的使用方式应类似于许多函数式语言中常见的 `let` 语句。 内部 `def` 语句也可以是函数。
 
 ```haskell
 def cube x = {
@@ -60,9 +61,9 @@ def cube x = {
 cube 3 = 27;
 ```
 
-Types for internal `def` statements are not given during compilation, but they are still checked.
+编译期间不会给出内部 `def` 语句的类型，但仍会对其进行检查。
 
-There is no limit to the number of lines or nestings within a definition. 
+定义中的行数或嵌套数没有限制。
 
 ```haskell
 def power x = {
@@ -80,7 +81,7 @@ def power x = {
 power 2 = 4096;
 ```
 
-Overlapping names are allowed. References to names will refer to the most recent binding.
+允许重复命名。 对名称的引用将引用最近的绑定。
 
 ```haskell
 def x = 4;
@@ -88,17 +89,16 @@ def x = 8;
 x = 8;
 ```
 
-During type checking, both variables are listed.
+在类型检查时，所有变量都是线性的。
 
 ```bash
 > x[2]: int
 > x[3]: int
 ```
 
-The numbers next to the names are, in some sense, the "true" names of the variables. Each variable has a unique number identifying it, allowing the system to avoid confusing variables with the same name.
+在某种意义上，名称旁边的数字是变量的“真实”名称。 每个变量都有一个唯一的编号来标识它，允许系统避免混淆具有相同名称的变量。
 
-
-Equations can also appear in definitions. Definitions may or may not return a value and can act as gates for other values.
+等式(Equations)也可以出现在定义中。 定义可能会或可能不会返回一个值，并且可以充当其他值的门电路。
 
 ```haskell
 def g1 x = {x = 4; x};
@@ -108,19 +108,17 @@ def g2 x = {x = 10};
 g2 10;
 ```
 
-Looking at the types, one sees something interesting. 
+看看这些类型，就会发现一些有趣的东西。
 
 ```bash
 > g2[5]: (int -> ())
 ```
 
-`g2` does, in fact, return a value; something of type `()`. This will be explained in the section on [tuples](section_2_3.md).
+事实上， `g2` 会返回一个 `()` 类型的值。这将在有关 [元组](section_2_3.md) 的部分中进行解释。
 
-This illustrates that a Vamp-IR file does not need any top-level equations, but will still represent a proposition through the equations enforced by function calls. `g1 5;` will produce an invalid proof, in this case.
+这说明 Vamp-IR 文件不需要任何顶级函数，但仍将通过函数调用强制执行的等式表示一个命题。 在这种情况下，`g1 5;` 将产生无效证明。
 
-
-
-Equations aren't enforced if their parent function is never actually called.
+如果从未实际调用等式的父函数，则不会强制执行等式。
 
 ```haskell
 def j x = {0 = 1; x};
@@ -128,9 +126,9 @@ def j x = {0 = 1; x};
 1 = 1;
 ```
 
-will produce a valid proof because `j` is never fully instantiated. Equations become part of the circuit when their parent function is fully instantiated. `def k = {0 = 1; 4};` **will** produce an invalid proof since `k` is already fully instantiated.
+将产生一个有效的证明，因为 `j` 从未被完全实例化。 当它们的父函数被完全实例化时，等式式成为电路的一部分。 `def k = {0 = 1; 4};` **将**产生无效证明，因为 `k` 已经完全实例化。
 
-Using polynomial constraints, one can create sophisticated, reusable checks. The following, for example, checks that a field element is a boolean; either 0 or 1.
+使用多项式约束，可以创建复杂的、可重复使用的检查。 例如，以下检查字段元素是否为布尔值： 0 或 1。
 
 ```haskell
 def isBool x = { 
@@ -142,7 +140,7 @@ isBool 0;
 isBool 1;
 ```
 
-Witnesses requiring solicitation may be created in definitions. For example;
+可以在定义中创建需要请求的 wintness。 例如:
 
 ```haskell
 def j x = x * y;
@@ -150,7 +148,8 @@ def j x = x * y;
 j 5 = 20;
 ```
 
-will solicit a value for `y`. It's worth noting that witnesses are not tied to definition scopes; they are global, regardless of where they are referenced. This means that 
+将为 y 请求一个值。 值得注意的是，wintness 不受定义范围的约束； 它们是全局的，无论它们在何处被引用。 这意味着
+
 
 ```haskell
 def j x = x * y;
@@ -158,5 +157,4 @@ def j x = x * y;
 j 5 = j 5;
 ```
 
-will only solicit a single value for `y`, and that value will be used for both calls to `j`.
-
+只会为 `y` 请求一个值，并且该值将用于对 `j` 的两次调用。
