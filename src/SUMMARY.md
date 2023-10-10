@@ -11,7 +11,7 @@
 - [基本算术运算](./section_2_1.md)
 - [函数](./section_2_2.md)
 - [元祖](./section_2_3.md)
-- [The Iter Function](./section_2_4.md)
+- [Iter 函数](./section_2_4.md)
 - [Lists](./section_2_5.md)
 - [Higher-Order Functions](./section_2_6.md)
 

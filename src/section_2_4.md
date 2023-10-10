@@ -1,12 +1,12 @@
-# The Iter Function
+# Iter 函数
 
-Frequently, we will want to repeat a function over and over again. Vamp-IR includes the `iter` function for this exact purpose. It takes three arguments;
+通常，我们会想要一遍又一遍地重复一个函数。 为此，Vamp-IR 包含 `iter` 函数。 它需要三个参数:
 
-1. A non-negative constant.
-2. A function to iterate.
-3. An argument to iterate on.
+1. 非负常数。
+2. 迭代函数。
+3. 需要迭代的参数。
 
-For example, if the exponential function was not already built-in, we could implement it via `iter`.
+例如，如果指数函数尚未内置，我们可以通过 `iter` 来实现它。
 
 ```haskell
 def exp_rec m r = m * r;
@@ -15,13 +15,11 @@ def exp m n = iter n (exp_rec m) 1;
 exp 3 2 = 9;
 ```
 
-`iter` must be able to be unfolded at circuit-generation time, meaning the constant cannot be a field element that would be decided at proving time. `iter x f 3` for an unbound `x` will give an error indicating that `x` must be a constant.
+`iter` 必须能够在电路生成时展开，这意味着常数不能是在证明时才决定的字段元素。 对于未绑定的 `x`，`iter x f 3` 将给出错误，提示 `x` 必须是常量。
 
-The main limitation of `iter` is that the function has to take a (simply typed) X and produce another X. If the input and output types do not match, we will get a typing error. This largely prevents useful interactions between `iter` and tuples. For example, trying the following
+`iter` 的主要限制是该函数必须接受一个（简单类型的）X 并生成另一个 X。如果输入和输出类型不匹配，我们将收到类型错误。 这在很大程度上阻止了 `iter` 和元组之间有用的交互。 例如，尝试以下操作
 
 ```haskell
 iter 2 tail (1, 2, 3, 4, ());
 ```
-
-will yield an error indicating that `([138], [137])` cannot unify with `[137]`. This tells us that the input and output types to `tail` cannot be made the same; the input must be a tuple, `([138], [137])`, while the output must be of the same type as the second element of the tuple, `[137]`.
-
+将产生一个错误，提示 `([138], [137])` 无法与 `[137]` 统一。 这告诉我们 `tail` 的输入和输出类型不能相同；输入必须是元组 `([138], [137])`，而输出必须与元组第二个元素 `[137]` 具有相同类型。

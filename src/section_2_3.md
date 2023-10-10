@@ -139,10 +139,6 @@ x = (1, 2);
 > ** x.1[10] (private): 
 ```
 
-It splits the variable into two sub-variables, named `x.0` (the first element of `x`) and `x.1` (the second element of `x`). So the compiled circuit does not, in fact, have a hole in the shape of a pair; rather it has two holes corresponding to the elements of the pair.
-
-Without a variable-free first-order datatype for each uninstantiated variable, circuit generation is not possible. If one tries compiling `x = y;` without definitions for x or y, they will get an error indicating such.
-
 它将变量拆分为两个子变量，分别命名为 `x.0`（`x`的第一个元素）和`x.1`（`x`的第二个元素）。 所以编译后的电路实际上并没有一对形状的占位； 相反，它有两个占位对应于对中的元素。
 
 如果每个未实例化的变量都没有无变量的一阶数据类型，则无法生成电路。 如果一个人试图在没有 x 或 y 定义的情况下编译 `x = y;`，他们将得到一个错误指示。
